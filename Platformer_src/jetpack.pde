@@ -11,17 +11,7 @@ int timer = 100;
     //if(timer == 0) {
     //  world.remove(this);
     //}
-    
-   
-    
-    
-    
-    
-    
-    
-    
  }
-
 
 void countdown() {
   timer = timer - 1;
@@ -29,7 +19,6 @@ void countdown() {
     world.remove(jetpack);
   }
 }
-
 
 void propulsion() {
    //FBox b = new FBox (gridSize,gridSize);
