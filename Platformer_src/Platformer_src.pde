@@ -58,9 +58,9 @@ void setup() {
   size(700, 700, FX2D);
   
   //Initializing world 
-  Fisica.init(this);
-  world = new FWorld(-100000, -100000, 100000, 100000);
-  world.setGravity(0, 900);
+  Fisica.init(this); //Initialize physics engine
+  world = new FWorld(-100000, -100000, 100000, 100000); //New world with dimensions 
+  world.setGravity(0, 900); //Set world's gravity
   
   //Loading images for running Right animation
   runR = new PImage[3];
@@ -267,7 +267,7 @@ void keyReleased() { //=========================================================
 
 //Collisions
 void contactStarted(FContact contact) {
-  
+
   //Contact between player and teleport box
   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "teleport_box")|| (contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "teleport_box")) {
     //TODO 
@@ -280,21 +280,21 @@ void contactStarted(FContact contact) {
   }
    
    //Contact between water and lava
-   if((contact.getBody1().getName() == "lava" && contact.getBody2().getName() == "water") || (contact.getBody2().getName() == "lava" && contact.getBody1().getName() == "water")) {
-     FBody lavaBody;
-     //If lava touches water, lava turns to rock
-     if(contact.getBody1().getName() == "lava"){
-       lavaBody = contact.getBody1();
-     }else{
-       lavaBody = contact.getBody2();
-     }
-     lavaBody.setFillColor(rock);
-   }
+  if((contact.getBody1().getName() == "lava" && contact.getBody2().getName() == "water") || (contact.getBody2().getName() == "lava" && contact.getBody1().getName() == "water")) {
+    FBody lavaBody;
+    //If lava touches water, lava turns to rock
+    if(contact.getBody1().getName() == "lava"){
+      lavaBody = contact.getBody1();
+    }else{
+      lavaBody = contact.getBody2();
+    }
+    lavaBody.setFillColor(rock);
+  }
    
    //Contact between player & lava blocks
-   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "lava")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "lava")) {
-      //TODO: game over
-   }
+  if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "lava")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "lava")) {
+     //TODO: game over
+  }
    
    //Contact between player and collapsing bridge
    // if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "Collapsing_Bridge")||

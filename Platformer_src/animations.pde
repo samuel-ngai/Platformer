@@ -15,13 +15,15 @@ void animations() {
 
 //Handles vertical animations
 void animationRestrictions() {
-  //If player's vertical velocity is greater than 0
+  //If player's vertical velocity is positive
   if(player.getVelocityY() > 0) {
     currentAction = jump; //currentAction set to jump array
   }
+  //If player's vertical velocity is negative
   if(player.getVelocityY() < 0) {
     currentAction = falling; //currentAction set to falling array
   }
+  //If player's vertical velocity is 0 (Landed after falling/jumping)
   if(player.getVelocityY() == 0) {
     currentAction = facingR; //currentAction set to default facing right animation
   }
