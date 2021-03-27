@@ -1,3 +1,4 @@
+//Handles movement velocities and animations
 void act() {
    if(w == true && canjump == true) {
      player.setVelocity(0,-400);

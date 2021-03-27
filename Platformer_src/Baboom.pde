@@ -1,6 +1,11 @@
+/**
+ *Bomb object
+ */
+
 class FBomb extends FBox {
   
   int timer = 100;
+  
   FBomb() {
     super(gridSize,gridSize);
     this.setPosition(player.getX()-4,player.getY()-5);
@@ -11,6 +16,7 @@ class FBomb extends FBox {
     timer = timer - 1;
   }
   
+  //Draws shockwave animation and calculates new velocities of objects affected
   void kaboom() {
     if(timer == 0){
       bomb = null; // for actual bomb 

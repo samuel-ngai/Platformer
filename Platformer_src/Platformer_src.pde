@@ -5,12 +5,13 @@ FJetpack jetpack;
 FWorld world;
 FBeam beam;
 
-int costumeNum;
-int contactNum = 0;
+//PImage looping index variable
+int costumeNum = 0;
+
 //Controls
 boolean w, a, s, d, g, f;
 
-//PImage is the datatype for storing imagines
+//PImage is the datatype for storing images
 PImage map; //map drawn to load world from
 
 //Arrays of images for movement animations
@@ -53,6 +54,7 @@ ArrayList<FBox> collapsing = new ArrayList<FBox>(); //Collapsing bridge
 boolean canjump = true; //Set to false whenever we jump, true when we are standing/land on a box
 
 void setup() {
+  //Size of world
   size(700, 700, FX2D);
   
   //Initializing world 
@@ -92,10 +94,14 @@ void setup() {
   //Falling animation
   falling = new PImage[1];
   falling[0] = loadImage("megaman8.png");
- 
+  
+  //Loads map image
   map = loadImage("map.png");
+  
+  //Loads flame image for jetpack
   flame = loadImage("flame.png");
  
+  //Loops through map dimensions (by pixel), creates new FBox objects depending on pixel colour
   int x = 0;
   int y = 0;
   while (y< map.height) {
@@ -177,12 +183,10 @@ void setup() {
        liquid.add(l);
      }
      x++;
-     
      if (x>map.width) {
        y++;
        x = 0;
      }
-     
    }
    
   //Initializing player object
@@ -200,7 +204,7 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  background(255); //Background = white
   act();
   animations();
   animationRestrictions();
@@ -238,8 +242,8 @@ void draw() {
   }
   
   translate(-player.getX()+width/2, -player.getY()+height/2); //Moves screen when player moves (keeps player centered)
-  world.step();
-  world.draw();
+  world.step(); //Advances world
+  world.draw(); //Loops draw function to update the world 
 
  }
 
@@ -272,12 +276,14 @@ void contactStarted(FContact contact) {
   
   //Contact between player and regular platform
   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "platform_box")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "platform_box")) {
+    //Assures no double jumps
     canjump = true;
   }
    
    //Contact between water and lava
-   if((contact.getBody1().getName() == "lava" && contact.getBody2().getName() == "water")|| (contact.getBody2().getName() == "lava" && contact.getBody1().getName() == "water")) {
+   if((contact.getBody1().getName() == "lava" && contact.getBody2().getName() == "water") || (contact.getBody2().getName() == "lava" && contact.getBody1().getName() == "water")) {
      FBody lavaBody;
+     //If lava touches water, lava turns to rock
      if(contact.getBody1().getName() == "lava"){
        lavaBody = contact.getBody1();
      }else{
@@ -288,9 +294,10 @@ void contactStarted(FContact contact) {
    
    //Contact between player & lava blocks
    if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "lava")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "lava")) {
-      //TODO
+      //TODO: game over
    }
    
+   //Contact between player and collapsing bridge
    // if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "Collapsing_Bridge")||
    //  (contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "Collapsing_Bridge")) {
    // //Put contact stuff here
@@ -315,8 +322,8 @@ void contactStarted(FContact contact) {
    //  }
    
    for(FBox box : collapsing) {
-   if (contact.contains("player", "Collapsing_Bridge")) {
-     box.setStatic(false);
-    }
+     if (contact.contains("player", "Collapsing_Bridge")) {
+       box.setStatic(false);
+     }
   }
 }
