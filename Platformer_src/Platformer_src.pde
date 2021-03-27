@@ -7,9 +7,13 @@ FBeam beam;
 
 int costumeNum;
 int contactNum = 0;
+//Controls
 boolean w, a, s, d, g, f;
 
-PImage map;
+//PImage is the datatype for storing imagines
+PImage map; //map drawn to load world from
+
+//Arrays of images for movement animations
 PImage[] runR;
 PImage[] runL;
 PImage[] facingR;
@@ -17,9 +21,12 @@ PImage[] facingL;
 PImage[] currentAction;
 PImage[] jump;
 PImage[] falling;
+PImage flame;
 
+//Used if title screen is implemented (mode = 0 for title, 1 for game, 2 for game over)
 int mode = 0;
 
+//Colours 
 color black = #000000;
 color water = #10D2FC;
 color red = #FFFFFF;
@@ -31,52 +38,58 @@ color steel = #ACACAC;
 color lava = #DF4800;
 color rock = #8B8B8B; // when water and lava touches
 
-int gridSize = 15;
-//int jump = 0;
+int gridSize = 15; //Size of all FBox objects
 
-FBox b;
-FBox l;
-FBox cb;
-ArrayList<FBox> boxes = new ArrayList<FBox>();
-ArrayList<FBox> liquid = new ArrayList<FBox>();
-ArrayList<FBox> collapsing = new ArrayList<FBox>();
+FBox b; //regular block objects
+FBox l; //liquid (lava, water) objects
+FBox cb; //Collapsing bridge objects
+FBox player; //player object
 
-FBox player;
+//ArrayList of different types of FBoxes loaded
+ArrayList<FBox> boxes = new ArrayList<FBox>(); //Platform boxes
+ArrayList<FBox> liquid = new ArrayList<FBox>(); //Water & lava blocks
+ArrayList<FBox> collapsing = new ArrayList<FBox>(); //Collapsing bridge
 
-PImage flame;
-
-boolean canjump = true;
+boolean canjump = true; //Set to false whenever we jump, true when we are standing/land on a box
 
 void setup() {
   size(700, 700, FX2D);
   
+  //Initializing world 
   Fisica.init(this);
   world = new FWorld(-100000, -100000, 100000, 100000);
   world.setGravity(0, 900);
   
+  //Loading images for running Right animation
   runR = new PImage[3];
   runR[0] = loadImage("megaman3.png");
   runR[1] = loadImage("megaman4.png");
   runR[2] = loadImage("megaman5.png");
   
+  //Loading images for running Left animation
   runL = new PImage[3];
   runL[0] = loadImage("megaman11.png");
   runL[1] = loadImage("megaman12.png");
   runL[2] = loadImage("megaman13.png");
  
+  //Loading images for idle (just loaded into game)
   currentAction = new PImage[1];
   currentAction[0] = loadImage("megaman0.png");
  
+  //Loading image for idle (last direction moved = right)
   facingR = new PImage[1];
   facingR[0] = loadImage("megaman0.png");
  
+  //Loading image for idle (last direction moved = left)
   facingL = new PImage[1];
   facingL[0] = loadImage("megaman14.png");
  
+  //Jumping animation
   jump = new PImage[1]; 
   jump[0] = loadImage("megaman6.png");
   //jump[1] = loadImage("megaman8.png");
  
+  //Falling animation
   falling = new PImage[1];
   falling[0] = loadImage("megaman8.png");
  
@@ -85,8 +98,8 @@ void setup() {
  
   int x = 0;
   int y = 0;
-   while ( y< map.height) {
-     
+  while (y< map.height) {
+     //Identifying different pixels by the color presets
      color c = map.get(x, y);
      if (c == black) {
        FBox b = new FBox(gridSize, gridSize);
@@ -164,12 +177,15 @@ void setup() {
        liquid.add(l);
      }
      x++;
+     
      if (x>map.width) {
        y++;
        x = 0;
      }
+     
    }
-
+   
+  //Initializing player object
   player = new FBox(10,10);
   player.setName("player_body");
   player.setFill(255);
@@ -221,28 +237,10 @@ void draw() {
     bomb.kaboom();
   }
   
-  if(player.getVelocityX() == 0 && w == false) {
-    currentAction = new PImage[1];
-    currentAction[0] = loadImage("megaman0.png");
-  }
-
-  pushMatrix();
-  
-  for (FBox box : boxes) {
-    stroke(255, 0, 0);
-    if (dist(mouseX, mouseY, box.getX(), box.getY()) < 2) {
-      line(mouseX, mouseY, box.getX(), box.getY());
-
-      if (mousePressed == true) {
-        b.setStatic(true);
-      }
-    }
-  } 
-  translate(-player.getX()+width/2, -player.getY()+height/2);
+  translate(-player.getX()+width/2, -player.getY()+height/2); //Moves screen when player moves (keeps player centered)
   world.step();
   world.draw();
 
-  popMatrix();
  }
 
 //Controls
@@ -264,7 +262,7 @@ void keyReleased() { //=========================================================
   if (key == 'f' || key == 'F' ) f = false;
 }
 
-
+//Collisions
 void contactStarted(FContact contact) {
   
   //Contact between player and teleport box

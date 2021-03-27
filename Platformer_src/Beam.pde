@@ -18,7 +18,7 @@ int timer = 100;
 
 void DidItHit() {
   for (FBox box : boxes) { 
-    if(dist(this.getX(),this.getY(),box.getX(),box.getY())<20) {
+    if(dist(this.getX(),this.getY(),box.getX(),box.getY())<15) {
       box.setStatic(false);
     }
   }

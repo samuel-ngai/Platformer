@@ -1,15 +1,20 @@
 void animations() {
+  //Assures we keep looping the currentAction array
   if(costumeNum >= currentAction.length) {
     costumeNum = 0;
   }
+  //Attaches corresponding action animations to the player object
   player.attachImage(currentAction[costumeNum]);
+  //Animation speed
   if(frameCount %10 == 0) {
     costumeNum++;
   }
   
 }
+
 float previousVar;
 void animationRestrictions() {
+  //Restricts jumping & falling animations
   if(player.getVelocityY() > 0) {
     currentAction = jump;
   }
@@ -19,21 +24,5 @@ void animationRestrictions() {
   if(player.getVelocityY() == 0) {
     currentAction = facingR;
   }
-
- 
-
-
-  //float var = player.getX();
-  // if(previousVar >= var) {
-  //   //do something 
-  //   currentAction = facingL;
-  // }else {
-  //   currentAction = facingR;
-  // }
-  // previousVar = var;
-
- 
-
- 
- 
+  
 }

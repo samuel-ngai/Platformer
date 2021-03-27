@@ -15,37 +15,36 @@ class FBomb extends FBox {
     if(timer == 0){
       bomb = null; // for actual bomb 
     }
-    if(timer < 60 && timer > 50){
-      ellipse(bomb.getX()-player.getX()+width/2,bomb.getY()-player.getY()+height/2,(timer-50)*1,(timer-50)*1);
-    }
+    //Shockwave animation 
     if(timer < 50 && timer > 30){
       ellipse(bomb.getX()-player.getX()+width/2,bomb.getY()-player.getY()+height/2,(50-timer)*15,(50-timer)*15);
     }
     
     if(timer == 50) {
-       for (FBox box : boxes) {
-        if(dist(bomb.getX(),bomb.getY(),box.getX(),box.getY()) < 100) {
-          float vx=0;
-          float vy=0;
-          vx = 5 * sqrt(sq(bomb.getX()-box.getX())+sq(bomb.getY()-box.getY()));
-          vy = 5 * sqrt(sq(bomb.getY()-box.getY())+sq(bomb.getX()-box.getX()));
-          if(box.getY() > bomb.getY()) {
-            vy = vy;
-          }
-          if(box.getX() < bomb.getX()) {
-            vx = -vx;
-          }
-          if(box.getY() < bomb.getY()) {
-            vy = -vy;
-          }
-          if(box.getX() > bomb.getX()) {
-            vx = vx;
-          }
-          box.setStatic(false);
-          box.setVelocity(vx,vy);
-        }
-      world.remove(bomb);
-      }
+      //Calculating different velocities for objects affected by bomb
+      for (FBox box : boxes) {
+       if(dist(bomb.getX(),bomb.getY(),box.getX(),box.getY()) < 100) {
+         float vx=0;
+         float vy=0;
+         vx = 5 * sqrt(sq(bomb.getX()-box.getX())+sq(bomb.getY()-box.getY()));
+         vy = 5 * sqrt(sq(bomb.getY()-box.getY())+sq(bomb.getX()-box.getX()));
+         if(box.getY() > bomb.getY()) {
+           vy = vy;
+         }
+         if(box.getX() < bomb.getX()) {
+           vx = -vx;
+         }
+         if(box.getY() < bomb.getY()) {
+           vy = -vy;
+         }
+         if(box.getX() > bomb.getX()) {
+           vx = vx;
+         }
+         box.setStatic(false);
+         box.setVelocity(vx,vy);
+       }
+       world.remove(bomb);
+       }
     }
     //bomb = null; //for 'jetpack'
   }
