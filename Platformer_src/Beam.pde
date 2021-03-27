@@ -1,21 +1,23 @@
 /**
  *Beam object
- *
+ *Extends FBox because beam is a FBox object
  */
 class FBeam extends FBox {
   
   int timer = 100;
   FBeam() {
-    super(10,10);
-    this.setPosition(player.getX()+5,player.getY());
-    this.setFill(0,0,255);
-    world.add(this);
+    super(10,10); //FBeam object's dimensions
+    this.setPosition(player.getX()+5,player.getY()); //Set spawn location (to the right of player)
+    this.setFill(0,0,255); //Set object color (blue)
+    world.add(this); //Add object to world
   }
   //Sets beam velocity to 500 to the right
   void shoot() {
-    this.setVelocity(500,0);
+    this.setVelocity(500,0); //Set object's velocity 
   }
   
+  //Decrements counter from moment beam object is created
+  //Used in DidItHit() to stop beam from flying forever
   void countdown() {
     timer--;
   }

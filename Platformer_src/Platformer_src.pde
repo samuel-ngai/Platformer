@@ -106,108 +106,107 @@ void setup() {
   int y = 0;
   while (y< map.height) {
      //Identifying different pixels by the color presets
-     color c = map.get(x, y);
-     if (c == black) {
-       FBox b = new FBox(gridSize, gridSize);
-       b.setStatic(true);
+     color c = map.get(x, y); //Set variable c as the current pixel's colour 
+     if (c == black) { //If the pixel is black
+       FBox b = new FBox(gridSize, gridSize); //New FBox object of size gridSize
+       b.setStatic(true); //Immovable (not affected by gravity), set to FALSE after contact with FBeam or FBomb
        b.setName("platform_box");
-       b.setFill(black);
-       b.setPosition(x*gridSize, y*gridSize);
-       world.add(b);
-       boxes.add(b);
+       b.setFill(black); //Set FBox object's colour to black
+       b.setPosition(x*gridSize, y*gridSize); //Set FBox object's position to corresponding map coordinates
+       world.add(b); //Adding object to world
+       boxes.add(b); //Adding object to ArrayList of platform objects
      }
-     if (c == water) {
-       println ("water");
-       FBox l = new FBox(gridSize, gridSize);
-       l.setStatic(false);
-       l.setFillColor(water);
-       l.setName("water");
-       l.setDensity(0.001);
-       l.setPosition(x*gridSize, y*gridSize);
-       l.setNoStroke();
-       world.add(l);
-       liquid.add(l);
+     if (c == water) { //If pixel is water coloured
+       FBox l = new FBox(gridSize, gridSize); //New FBox object of size gridSize
+       l.setStatic(false); //Movable (Affected by gravity, FBeam, and FBomb)
+       l.setFillColor(water); //Set FBox object's colour to water colour
+       l.setName("water"); //Set object's name
+       l.setDensity(0.001); //Set object's density (adjusted to act like water)
+       l.setPosition(x*gridSize, y*gridSize); //Set FBox object's position to corresponding map coordinates
+       l.setNoStroke(); //No outline
+       world.add(l); //Adding object to world
+       liquid.add(l); //Adding object to ArrayList of liquid objects
      }
-     if (c == bounce) {
-       FBox b = new FBox(gridSize,gridSize);
-       b.setStatic(true);
-       b.setFillColor(bounce);
-       b.setPosition(x*gridSize,y*gridSize);
-       b.setRestitution(3);
-       world.add(b);
-       boxes.add(b);
+     if (c == bounce) { //If pixel is colour of bouncy platform
+       FBox b = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       b.setStatic(true); //Immovable (Not affected by gravity), set to FALSE after contact with FBeam or FBomb
+       b.setFillColor(bounce); //Set FBox object's colour to bouncy object colour
+       b.setPosition(x*gridSize,y*gridSize); //Set FBox object's position to corresponding map coordinates
+       b.setRestitution(3); //Set bouncy level 
+       world.add(b); //Add object to world
+       boxes.add(b); //Add object to ArrayList of platform objects
      }
-     if(c == teleport) {
-       FBox b = new FBox(gridSize,gridSize);
-       b.setName("teleport_box");
-       b.setStatic(true);
-       b.setFillColor(teleport);
-       b.setPosition(x*gridSize,y*gridSize);
-       b.setNoStroke();
-       world.add(b);
-       boxes.add(b);
+     if(c == teleport) { //If pixel is colour of teleporting pad
+       FBox b = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       b.setName("teleport_box"); //Set object's name
+       b.setStatic(true); //Immovable (Not affected by gravity), set to FALSE after contact with FBeam or FBomb
+       b.setFillColor(teleport); //Set FBox object's colour to teleport object's color
+       b.setPosition(x*gridSize,y*gridSize); //Set FBox object's postion to corresponding map coordinates
+       b.setNoStroke(); //No outline
+       world.add(b); //Add object to world
+       boxes.add(b); //Add object to ArrayList of platform objects
      }
-     if(c == crate) {
-       FBox b = new FBox(gridSize,gridSize);
-       b.setStatic(false);
-       b.setFillColor(crate);
-       b.setPosition(x*gridSize,y*gridSize);
-       world.add(b);
-       boxes.add(b);
+     if(c == crate) { //If pixel is colour of crate
+       FBox b = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       b.setStatic(false); //Movable (Affected by gravity, FBeam, FBomb)
+       b.setFillColor(crate); //Set object's color to crate color
+       b.setPosition(x*gridSize,y*gridSize); //Set Fbox object's position to corresponding map coordinates
+       world.add(b); //Add object to world
+       boxes.add(b); //Add object to ArrayList of platform objects
      }
-     if(c == CBridge) {
-       FBox cb = new FBox(gridSize,gridSize);
-       cb.setStatic(true);
-       cb.setName("Collapsing_Bridge");
-       cb.setFillColor(CBridge);
-       cb.setPosition(x*gridSize,y*gridSize);
-       world.add(cb);
-       collapsing.add(cb);
+     if(c == CBridge) { //If pixel is colour of collapsing bridge
+       FBox cb = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       cb.setStatic(true); //Immovable (Not affected by gravity), set to FALSE after contact with FBeam, FBomb
+       cb.setName("Collapsing_Bridge"); //Set object's name
+       cb.setFillColor(CBridge); //Set object's color to CBridge preset
+       cb.setPosition(x*gridSize,y*gridSize); //Set FBox object's position to corresponding map coordinates
+       world.add(cb); //Add object to world
+       collapsing.add(cb); //Add object to ArrayList of collapsing bridge objects
      }
-     if(c == steel) {
-       FBox b  = new FBox(gridSize,gridSize);
-       b.setStatic(true);
-       b.setName("platform_box");
-       b.setFillColor(steel);
-       b.setPosition(x*gridSize,y*gridSize);
-       world.add(b);
+     if(c == steel) { //If pixel is colour of steel
+       FBox b  = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       b.setStatic(true); //Immovable (Not affected by gravity) CANNOT BE AFFECTED BY FBEAM OR FBOMB
+       b.setName("platform_box"); //Set object's name
+       b.setFillColor(steel); //Set object's colour to steel preset
+       b.setPosition(x*gridSize,y*gridSize); //Set Fbox object's position to corresponding map coordinates
+       world.add(b); //Add object to world
      }
-     if(c == lava) {
-       FBox l = new FBox(gridSize,gridSize);
-       l.setStatic(false);
-       l.setFillColor(lava);
-       l.setName("lava");
-       l.setDensity(0.1);
-       l.setPosition(x*gridSize,y*gridSize);
-       world.add(l);
-       liquid.add(l);
+     if(c == lava) { //If pixel is colour of lava
+       FBox l = new FBox(gridSize,gridSize); //New FBox object of size gridSize
+       l.setStatic(false); //Movable (Affected by gravity, FBeam, FBomb)
+       l.setFillColor(lava); //Set object's colour to lava preset
+       l.setName("lava"); //Set object's name
+       l.setDensity(0.1); //Set density
+       l.setPosition(x*gridSize,y*gridSize); //Set FBox object's position to corresponding map coordinates
+       world.add(l); //Add object to world
+       liquid.add(l); //Add object to ArrayList of liquids
      }
      x++;
-     if (x>map.width) {
-       y++;
-       x = 0;
+     if (x>map.width) { //If x is past the end of the map, increment y
+       y++; //increment y
+       x = 0; //reset x
      }
    }
    
   //Initializing player object
-  player = new FBox(10,10);
-  player.setName("player_body");
-  player.setFill(255);
-  player.setNoStroke();
-  player.setPosition(350, 200);
-  player.setGrabbable(false);
+  player = new FBox(10,10); //New FBox object of size 10, 10
+  player.setName("player_body"); //Set player object's name
+  player.setFill(255); //Set object color
+  player.setNoStroke(); //No outline
+  player.setPosition(350, 200); //Set spawn location 
+  player.setGrabbable(false); //Can't be moved by mouse
   //player.setAngularVelocity(0);
-  player.setRotation(0);
-  player.setRotatable(false);
-  player.setFriction(10);
-  world.add(player);
+  player.setRotation(0); //Set rotation to 0
+  player.setRotatable(false); //Can't rotate
+  player.setFriction(10); //Set friction between object and platforms 
+  world.add(player); //Add player object to world
 }
 
 void draw() {
   background(255); //Background = white
-  act();
-  animations();
-  animationRestrictions();
+  act(); //Act function handles WASD movement and horizontal movement animations
+  animations(); //Handles animation speed and looping
+  animationRestrictions(); //Handles vertical animations
   
   //use these lines of code to enable the jetpack
   //if(jetpack == null && w == true) {
@@ -222,23 +221,23 @@ void draw() {
   
   //Create beam when 'f' key is pressed
   if(beam == null && f == true) {
-    beam = new FBeam();
+    beam = new FBeam(); //New FBeam object 
   }
-  if(beam !=null) {
-    beam.setFill(0,0,255);
-    beam.countdown();
-    beam.shoot();
-    beam.DidItHit();
+  if(beam !=null) { //While FBeam timer != 0
+    beam.setFill(0,0,255); //Set beam colour
+    beam.countdown(); //Initiate countdown
+    beam.shoot(); //Sets beam object's horizontal velocity
+    beam.DidItHit(); //Handles collisions between beam object and others
   }
   
   //Create bomb when 'g' key is pressed
   if(bomb == null  && g == true) {
-    bomb = new FBomb();
+    bomb = new FBomb(); //New FBomb object
   }
-  if(bomb != null) {
-    bomb.setFillColor(red);
-    bomb.countdown();
-    bomb.kaboom();
+  if(bomb != null) { //While FBomb timer != 0
+    bomb.setFillColor(red); //Set bomb colour
+    bomb.countdown(); //Initiate countdown
+    bomb.kaboom(); //Handles explosion animation and new velocities of blocks affected
   }
   
   translate(-player.getX()+width/2, -player.getY()+height/2); //Moves screen when player moves (keeps player centered)

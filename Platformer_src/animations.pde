@@ -7,22 +7,23 @@ void animations() {
   //Attaches corresponding action animations to the player object
   player.attachImage(currentAction[costumeNum]);
   //Animation speed
-  if(frameCount %10 == 0) {
-    costumeNum++;
+  if(frameCount %10 == 0) { //frameCount contains number of frames that have been displayed since program began
+    costumeNum++; //Increment animation array index variable
   }
   
 }
 
-//Resets currentAction during/after falling/jumping
+//Handles vertical animations
 void animationRestrictions() {
+  //If player's vertical velocity is greater than 0
   if(player.getVelocityY() > 0) {
-    currentAction = jump;
+    currentAction = jump; //currentAction set to jump array
   }
   if(player.getVelocityY() < 0) {
-    currentAction = falling;
+    currentAction = falling; //currentAction set to falling array
   }
   if(player.getVelocityY() == 0) {
-    currentAction = facingR;
+    currentAction = facingR; //currentAction set to default facing right animation
   }
   
 }
