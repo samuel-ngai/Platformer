@@ -5,7 +5,6 @@
 class FJetpack extends FBox {
   
   int timer = 100;
-  
 
   FJetpack() {
      super(gridSize,gridSize); //Sets object's dimensions
@@ -17,7 +16,7 @@ class FJetpack extends FBox {
   
   //decrements timer variable, when timer == 0, remove jetpack object from world
   void countdown() {
-    timer = timer - 1;
+    timer--;
     if(timer == 0) {
       world.remove(jetpack); //Remove object from world
     }

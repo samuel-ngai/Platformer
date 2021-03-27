@@ -5,6 +5,7 @@
 class FBeam extends FBox {
   
   int timer = 100;
+  
   FBeam() {
     super(10,10); //FBeam object's dimensions
     this.setPosition(player.getX()+5,player.getY()); //Set spawn location (to the right of player)
