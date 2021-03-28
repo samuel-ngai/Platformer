@@ -7,7 +7,7 @@ void animations() {
   //Attaches corresponding action animations to the player object
   player.attachImage(currentAction[costumeNum]);
   //Animation speed
-  if(frameCount %10 == 0) { //frameCount contains number of frames that have been displayed since program began
+  if(frameCount % 10 == 0) { //frameCount contains number of frames that have been displayed since program began
     costumeNum++; //Increment animation array index variable
   }
   

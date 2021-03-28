@@ -4,6 +4,7 @@
  */
 class FJetpack extends FBox {
   
+  //Timer variable used to remove jetpack object from world
   int timer = 100;
 
   FJetpack() {

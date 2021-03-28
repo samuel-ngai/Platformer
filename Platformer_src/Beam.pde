@@ -4,6 +4,7 @@
  */
 class FBeam extends FBox {
   
+  //Timer variable used to deactivate beam object from flying and colliding forever
   int timer = 100;
   
   FBeam() {

@@ -5,6 +5,7 @@
 
 class FBomb extends FBox {
   
+  //Timer variable used for correctly timed explosion animation and removal of object from world
   int timer = 100;
   
   FBomb() {

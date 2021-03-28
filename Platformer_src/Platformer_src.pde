@@ -15,14 +15,14 @@ boolean w, a, s, d, g, f;
 PImage map; //map drawn to load world from
 
 //Arrays of images for movement animations
-PImage[] runR;
-PImage[] runL;
-PImage[] facingR;
-PImage[] facingL;
-PImage[] currentAction;
-PImage[] jump;
-PImage[] falling;
-PImage flame;
+PImage[] runR; //Running in right direction
+PImage[] runL; //Running in left direction
+PImage[] facingR; //Facing right direction (idle)
+PImage[] facingL; //Facing left direction (idle)
+PImage[] currentAction; //currentAction of player
+PImage[] jump; //Jumping animation
+PImage[] falling; //Falling animation
+PImage flame; //Flame image for jetpack
 
 //Used if title screen is implemented (mode = 0 for title, 1 for game, 2 for game over)
 int mode = 0;
@@ -33,10 +33,10 @@ color water = #10D2FC;
 color red = #FFFFFF;
 color bounce = #F46F35; //(244,111,53) orange
 color teleport = #2BFFAF; //(42,255,175) light lime green
-color crate = #B38342;
-color CBridge = #C615DF;
-color steel = #ACACAC;
-color lava = #DF4800;
+color crate = #B38342; //Beige
+color CBridge = #C615DF; //Purple
+color steel = #ACACAC; //Silver
+color lava = #DF4800; //Dark orange (almost red)
 color rock = #8B8B8B; // when water and lava touches
 
 int gridSize = 15; //Size of all FBox objects
@@ -55,7 +55,7 @@ boolean canjump = true; //Set to false whenever we jump, true when we are standi
 
 void setup() {
   //Size of world
-  size(700, 700, FX2D);
+  size(700, 700, FX2D); //Initialize dimensions of your screen
   
   //Initializing world 
   Fisica.init(this); //Initialize physics engine
@@ -110,7 +110,7 @@ void setup() {
      if (c == black) { //If the pixel is black
        FBox b = new FBox(gridSize, gridSize); //New FBox object of size gridSize
        b.setStatic(true); //Immovable (not affected by gravity), set to FALSE after contact with FBeam or FBomb
-       b.setName("platform_box");
+       b.setName("platform_box"); //Set object's name
        b.setFill(black); //Set FBox object's colour to black
        b.setPosition(x*gridSize, y*gridSize); //Set FBox object's position to corresponding map coordinates
        world.add(b); //Adding object to world
@@ -183,8 +183,8 @@ void setup() {
      }
      x++;
      if (x>map.width) { //If x is past the end of the map, increment y
-       y++; //increment y
-       x = 0; //reset x
+       y++; //increment y (next level of pixels)
+       x = 0; //reset x for newline of pixels
      }
    }
    
@@ -268,18 +268,18 @@ void keyReleased() { //=========================================================
 //Collisions
 void contactStarted(FContact contact) {
 
-  //Contact between player and teleport box
+  //Contact between player and teleport box (and vice versa to ensure correct collisions)
   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "teleport_box")|| (contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "teleport_box")) {
     //TODO 
   }
   
-  //Contact between player and regular platform
+  //Contact between player and regular platform (and vice versa to ensure correct collisions)
   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "platform_box")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "platform_box")) {
     //Assures no double jumps
     canjump = true;
   }
    
-   //Contact between water and lava
+  //Contact between water and lava (and vice versa to ensure correct collisions)
   if((contact.getBody1().getName() == "lava" && contact.getBody2().getName() == "water") || (contact.getBody2().getName() == "lava" && contact.getBody1().getName() == "water")) {
     FBody lavaBody;
     //If lava touches water, lava turns to rock
@@ -291,7 +291,7 @@ void contactStarted(FContact contact) {
     lavaBody.setFillColor(rock);
   }
    
-   //Contact between player & lava blocks
+  //Contact between player & lava blocks (and vice versa to ensure correct collisions)
   if((contact.getBody1().getName() == "player_body" && contact.getBody2().getName() == "lava")||(contact.getBody2().getName() == "player_body" && contact.getBody1().getName() == "lava")) {
      //TODO: game over
   }
