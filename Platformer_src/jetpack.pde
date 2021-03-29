@@ -23,7 +23,10 @@ class FJetpack extends FBox {
     }
   }
   
+  //-----------------------------------------------------
   //Creates a new object to act as propulsion flames 
+  //-----------------------------------------------------
+
   void propulsion() {
     // FBox b = new FBox (gridSize,gridSize);
     // b.setStatic(false);

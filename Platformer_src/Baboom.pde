@@ -1,7 +1,12 @@
 /**
+ *Author: Samuel Ngai
+ *
  *Bomb object
+ ***********************************************
  *Extends FBox because bomb is a FBox object
- */
+ *
+ ***********************************************
+*/
 
 class FBomb extends FBox {
   
